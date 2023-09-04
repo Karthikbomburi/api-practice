@@ -1,0 +1,83 @@
+<html>
+    <head>
+        <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/…er/sprites/pokemon/other/official-artwork.png" alt="">
+        <style>
+            #ee{
+                display: flex;
+                flex-wrap: wrap;
+            }
+            #ee li{
+                list-style:none;
+                width: 250px;
+                height: 300px;
+                padding: 20px;
+                border: 2px solid;
+                font-style:italic;
+                font-family: Verdana, Geneva, Tahoma, sans-serif;
+                font-weight: bold;
+                text-rendering: geometricPrecision;
+                text-transform: uppercase;
+                text-shadow: 10px;
+                text-align-last: left;
+                border-style: solid;
+                background-color: aquamarine;
+            }
+        </style>
+       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    </head>
+    <body>
+        <input type="text" id="dd" placeholder="enter a number">
+        <button onclick="sub()">submit</button>
+        <ul id="ee"></ul>
+    </body>
+    <script>
+var d1=document.getElementById("ee")
+        function genUI(){
+            d1.innerHTML=""
+            var url="https://pokeapi.co/api/v2/pokemon"
+            var nm= Math.floor(Math.random()*500);
+            var imgUrl="https://raw.githubusercontent.com/PokeAPI/sprites/…er/sprites/pokemon/other/official-artwork.png"
+            axios.get(`${url}/${nm}`).then(function(response){
+                var j=response.data
+                console.log(j)
+                var newli=document.createElement("li")
+                newli.innerHTML="name:"+j.name
+
+               var div1=document.createElement("div")
+               div1.innerHTML="order:"+j.order
+               newli.appendChild(div1)
+
+              var div2=document.createElement("div")
+              div2.innerHTML= "weight:"+j.weight
+              newli.appendChild(div2)
+
+              
+              var div3=document.createElement("div")
+              div3.innerHTML="movename:"+j.moves[0].move.name
+              newli.appendChild(div3)
+            
+              var im=document.createElement("img")
+              im.style.width="200px"
+              im.style.height="150px"
+              im.style.alignContent=top
+              im.style.borderInlineStyle="center"
+              im.src=j.sprites.front_default
+               newli.appendChild(im)
+
+              document.getElementById("ee").appendChild(newli)  
+
+            }).catch(function(error){console.log(error)})
+        }
+        function sub(){
+            var res=document.getElementById("dd").value
+            if(res>=1&&res<=500){
+                genUI()
+            }
+            else{
+                alert("your number should be between 1 to 500")
+            }
+        }
+       
+    </script>
+</html>

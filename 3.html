@@ -1,0 +1,96 @@
+<html>
+    <head>
+        <style>
+            #sh{
+                position: absolute;
+                left: 160px;
+            }
+        </style>
+        <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <div class="search-container">
+            <input type="text" id="search-input" placeholder="Enter your search query">
+            <button id="search-button">Search</button>
+          </div>
+          <div id="search-results">
+        <button onclick="getcountries()">get countries</button>
+        <table border="2px", padding="20px">
+            <tr>
+                <th style="border: 10px;">country</th>
+                <th>population</th>
+                <th>capital</th>
+                <th>area</th>
+                <th>flags</th>
+            </tr>
+            <tbody id="d1"></tbody>
+        </table>
+         <script>
+            document.addEventListener("DOMContentLoaded", function() {
+             var searchInput = document.getElementById("search-input");
+             var searchButton = document.getElementById("search-button");
+             var searchResults = document.getElementById("search-results");
+             var countries =document.getElementById("countries")
+             searchButton.addEventListener("click", function getcountries() {
+             var query = searchInput.value.trim(); 
+             var filteredCountries = filterCountries(query);
+             displayFilteredCountries(filteredCountries);
+         });
+         function filterCountries(query) {
+    return Array.from(countries).filter(country => {
+      return country.textContent.toLowerCase().includes(query.toLowerCase());
+    });
+  }
+
+            function displayFilteredCountries(filteredCountries) {
+             searchResults.innerHTML = country.name.common; 
+    
+    if (filteredCountries.length === 0) {
+      searchResults.innerHTML = "No matching countries found.";
+      return;
+    }
+    
+    filteredCountries.forEach(country => {
+      var resultDiv = document.createElement("div");
+      resultDiv.textContent = country.textContent;
+      searchResults.appendChild(resultDiv);
+        });
+        }
+        });
+            function getcountries(){
+                $.get("https://restcountries.com/v3/all",function(countries,y){
+                    console.log(countries)
+                    countries.forEach(function(country){
+                    var tr1=document.createElement("tr")
+                    var td1=document.createElement("td")
+                    td1.innerHTML=country.name.common;
+                    tr1.appendChild(td1);
+
+                    var td2=document.createElement("td")
+                    td2.innerHTML=country.population;
+                    tr1.appendChild(td2);
+
+                    var td3=document.createElement("td")
+                    td3.innerHTML=country.capital;
+                    tr1.appendChild(td3);
+
+                    var td4=document.createElement("td")
+                    td4.innerHTML=country.area;
+                    tr1.appendChild(td4);
+
+                    var td5=document.createElement("td")
+                    var im=document.createElement("img")
+                    im.src=country.flags[0];
+                    im.style.width="50px"
+                    im.style.height="50px"
+                    im.style.borderRadius="50px"
+                    td5.appendChild(im);
+                    tr1.appendChild(td5);
+
+                    document.getElementById("d1").appendChild(tr1)
+                    }) 
+                })
+            }
+        </script>
+    </body>
+</html>

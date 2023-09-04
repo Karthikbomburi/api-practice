@@ -1,0 +1,54 @@
+<html>
+    <head><script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script></head>
+    <body>
+        <button onclick="getproducts()">click for info</button>
+        <table border="2px", padding="20px">
+            <tr>
+                <th style="border: 10px;">product</th>
+                <th>rating</th>
+                <th>price</th>
+                <th>description</th>
+                <th>pic</th>
+            </tr>
+            <tbody id="d1"></tbody>
+        </table>
+    </body>
+    <script>
+        function getproducts(){
+                axios.get("https://fakestoreapi.com/products").then(function (response){
+                var ar=response.data
+                console.log(response)
+                ar.forEach(function(r){
+                    var tr1=document.createElement("tr")
+                    var td1=document.createElement("td")
+                    td1.innerHTML=r.title;
+                    tr1.appendChild(td1);
+
+                    var td2=document.createElement("td")
+                    td2.innerHTML=r.rate;
+                    tr1.appendChild(td2);
+
+                    var td3=document.createElement("td")
+                    td3.innerHTML=r.price;
+                    tr1.appendChild(td3);
+
+                    var td4=document.createElement("td")
+                    td4.innerHTML=r.description;
+                    tr1.appendChild(td4);
+
+                    var td5=document.createElement("td")
+                    var im=document.createElement("img")
+                    im.src=r.image;
+                    im.style.width="50px"
+                    im.style.height="50px"
+                    im.style.borderRadius="50px"
+                    td5.appendChild(im);
+                    tr1.appendChild(td5);
+
+                    document.getElementById("d1").appendChild(tr1) 
+                })
+                
+                })
+            }
+    </script>
+</html>
